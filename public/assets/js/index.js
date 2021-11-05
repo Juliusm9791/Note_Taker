@@ -31,7 +31,16 @@ const getNotes = () =>
     headers: {
       'Content-Type': 'application/json',
     },
-  });
+  })
+  /////
+  .then((notes) => notes.json())
+  .then((data) => console.log(data))
+  
+  .catch((error) => {
+    console.error('Error:', error);
+  })
+  /////
+  ;
 
 const saveNote = (note) =>
   fetch('/api/notes', {
@@ -40,7 +49,18 @@ const saveNote = (note) =>
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(note),
-  });
+  })
+  /////
+    // .then((response) => response.json())
+    // .then((data) => {
+    //   alert(data);
+    //   // createCard(tip);
+    // })
+    // .catch((error) => {
+    //   console.error('Error:', error);
+    // })
+  /////
+  ;
 
 const deleteNote = (id) =>
   fetch(`/api/notes/${id}`, {
