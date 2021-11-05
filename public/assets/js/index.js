@@ -33,12 +33,12 @@ const getNotes = () =>
     },
   })
   /////
-  .then((notes) => notes.json())
-  .then((data) => console.log(data))
+  // .then((notes) => notes.json())
+  // .then((data) => console.log(data))
   
-  .catch((error) => {
-    console.error('Error:', error);
-  })
+  // .catch((error) => {
+  //   console.error('Error:', error);
+  // })
   /////
   ;
 

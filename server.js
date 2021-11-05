@@ -2,6 +2,13 @@ const express = require('express');
 const { v4: uuidv4 } = require('uuid');
 const path = require('path');
 const fs = require('fs');
+
+const {
+  readFromFile,
+  readAndAppend,
+  writeToFile,
+} = require('./helpers/fsUtils');
+
 // Helper method for generating unique ids
 
 const PORT = 3001;
@@ -21,67 +28,27 @@ app.get('/notes', (req, res) =>
 );
 
 app.get('/api/notes', (req, res) => {
-  // Send a message to the client
-  res.status(200).json(`${req.method} request received to get notes Front`);
-
-  // Log our request to the terminal
-  console.info(`${req.method} request received to get notes Back`);
+  readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 });
 
-// POST request to add a review
 app.post('/api/notes', (req, res) => {
-  // Log that a POST request was received
-  console.info(`${req.method} request received to add a note Back`);
+  console.log(req.body);
 
-  // Destructuring assignment for the items in req.body
   const { title, text } = req.body;
 
-  // If all the required properties are present
-  if (title && text) {
-    // Variable for the object we will save
-    const newReview = {
+  if (req.body) {
+    const newNote = {
       title,
       text,
-      id: uuidv4(),
+      noteId: uuidv4(),
     };
 
-    // Obtain existing reviews
-    fs.readFile('./db/db.json', 'utf8', (err, data) => {
-      if (err) {
-        console.error(err);
-      } else {
-        // Convert string into JSON object
-        const parsedReviews = JSON.parse(data);
-
-        // Add a new review
-        parsedReviews.push(newReview);
-
-        // Write updated reviews back to the file
-        fs.writeFile(
-          './db/db.json',
-          JSON.stringify(parsedReviews, null, 4),
-          (writeErr) =>
-            writeErr
-              ? console.error(writeErr)
-              : console.info('Successfully added note!')
-        );
-      }
-    });
-
-    const response = {
-      status: 'success',
-      body: newReview,
-    };
-
-    console.log(response);
-    res.status(201).json(response);
+    readAndAppend(newNote, './db/db.json');
+    res.json(`Note added successfully 🚀`);
   } else {
-    res.status(500).json('Error in posting review');
+    res.error('Error in adding note');
   }
 });
-
-
-
 
 
 app.listen(PORT, () =>
