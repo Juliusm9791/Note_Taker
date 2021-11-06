@@ -9,8 +9,6 @@ const {
   writeToFile,
 } = require('./helpers/fsUtils');
 
-// Helper method for generating unique ids
-
 const PORT = 3001;
 
 const app = express();
@@ -40,7 +38,7 @@ app.post('/api/notes', (req, res) => {
     const newNote = {
       title,
       text,
-      noteId: uuidv4(),
+      id: uuidv4(),
     };
 
     readAndAppend(newNote, './db/db.json');
@@ -48,6 +46,39 @@ app.post('/api/notes', (req, res) => {
   } else {
     res.error('Error in adding note');
   }
+});
+
+// GET Route for a specific note
+app.get('/api/notes/:id', (req, res) => {
+  console.info(`${req.method} request received to get a single a review`, req.params.id);
+  const idForNote = req.params.id;
+  readFromFile('./db/db.json')
+    .then((data) => JSON.parse(data))
+    .then((json) => {
+      const result = json.filter((notes) => notes.id === idForNote);
+      return result.length > 0
+        ? res.json(result)
+        : res.json('No note with that ID');
+    });
+});
+
+// DELETE Route for a specific note
+app.delete('/api/notes/:id', (req, res) => {
+  console.info(`${req.method} request received to get a single a review`, req.params.id);
+
+  const idForNote = req.params.id;
+  readFromFile('./db/db.json')
+    .then((data) => JSON.parse(data))
+    .then((json) => {
+      // Make a new array of all notes except the one with the ID provided in the URL
+      const result = json.filter((notes) => notes.id !== idForNote);
+
+      // Save that array to the filesystem
+      writeToFile('./db/db.json', result);
+
+      // Respond to the DELETE request
+      res.json(`Item ${idForNote} has been deleted 🗑️`);
+    });
 });
 
 
