@@ -9,8 +9,12 @@ const clog = (req, res, next) => {
       console.log(`📘${req.method} request to ${req.path}`);
       break;
     }
-    default:
+    case 'DELETE': {
       console.log(`📙${req.method} request to ${req.path}`);
+      break;
+    }
+    default:
+      console.log(`${req.method} request to ${req.path}`);
   }
 
   next();
