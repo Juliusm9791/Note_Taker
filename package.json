@@ -1,12 +1,12 @@
 {
   "name": "note-taker",
   "version": "1.0.1",
-  "description": "",
+  "description": "Saves notes",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "+ Julius Markauaskas",
+  "author": "updated by Julius Markauskas",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",

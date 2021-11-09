@@ -1,5 +1,6 @@
 # Note Taker
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
+[![Heroku](https://heroku-badge.herokuapp.com/?app=heroku-badge&style=flat)](https://pure-dusk-16215.herokuapp.com/)
 
 
   ## Table of contents
@@ -12,19 +13,12 @@
 
   ## Description
 
-  
+   Simple application which allows you to write, store and delete stored notes.
+   [Check it on HEROKU](https://pure-dusk-16215.herokuapp.com/)
 
-  
+  The following images show the web application's appearance and functionality:
   ![Note taker](./public/assets/images/note_taker1.png)
   ![Note taker](./public/assets/images/note_taker2.png)
-
-
-   #### For this project the following technologies were used:
-  * Nodejs
-
-  * npm inquirer
-
-
 
   ## Installation instructions
 
@@ -34,9 +28,11 @@
 
   ## Usage information
 
-  To use this app - run the following command:
+   To use this app - run the following command:
 
  ```npm start```
+
+  App listening at http://localhost:3001 
 
   ## License
 
